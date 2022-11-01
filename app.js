@@ -1,49 +1,27 @@
-require('dotenv').config()
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+// Routes
+import routes from "./src/routes/routes.js";
 
-console.log(process.env.TESTING);
-
-const express = require("express");
-const HTTP = require('http');
-// const cors = require('cors');
-const bodyParser = require('body-parser');
-
-require('./config/db.config');
-
-console.log('This is Server.js');
-
-// enable CORS
 const app = express();
-const PORT = 3001;
 
-// app.unsubscribe(cors());
+// Settings
+app.set("port", process.env.PORT || 4000);
+app.set("json spaces", 4);
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method"
-    );
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-  });
+// Files
 
-
-  // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-// parse requests of content-type - application/json
+// Middlewares
+app.use(
+  cors({
+    // origin: "http://localhost:3000",
+  })
+);
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-// define a root route
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use(express.urlencoded({ extended: false }));
 
-const mainController = require("./src/routes/routes");
-app.use("/api", mainController);
+// Routes
+app.use("/api", routes);
 
-var httpServer = HTTP.createServer(app);
-
-httpServer.listen(PORT, () => {
-  console.log(`Server http is listen on port => ${PORT}`);
-});
+export default app;

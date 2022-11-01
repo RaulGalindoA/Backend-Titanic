@@ -1,9 +1,22 @@
-const express = require("express");
-const router = express.Router();
-const mainController = require("../controllers/main.controller");
+import {
+  addPerson,
+  deletePerson,
+  getAll,
+  importData,
+  updatePerson,
+} from "../controllers/main.controller.js";
+import { Router } from "express";
+import { upload } from "../middlewares/middleware.js";
+const router = Router();
 
-// Retrieve kpi
-// router.get("/items", mercadoLibreController.findAll);
-// router.get("/items/:id", mercadoLibreController.descripcionById);
+router.post("/person/addPerson", addPerson);
 
-module.exports = router;
+router.post("/person/updatePerson", updatePerson);
+
+router.post("/person/deletePerson", deletePerson);
+
+router.get("/person/getAll", getAll);
+
+router.post("/person/import", upload.single("file"), importData);
+
+export default router;

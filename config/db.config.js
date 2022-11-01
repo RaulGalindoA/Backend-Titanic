@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import { config } from "dotenv"
+config();
 
 const { HOST, DATABASE } = process.env
 
-const MONGODB_URI = `mongodb://${HOST}/${DATABASE}`
+const MONGODB_URI = `mongodb://admin:admin@${HOST}/${DATABASE}`
  
 mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
