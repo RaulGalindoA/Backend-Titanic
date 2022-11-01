@@ -28,7 +28,7 @@ export const addPerson = async (req, res) => {
     let exist = await Person.find({ Name });
 
     if (exist.length > 0) {
-      res.status(500).json({ message: "This person exists already." });
+      res.status(500).json({ message: "This person exists already.", isSuccess: false });
     } else {
       const personSaved = await newPerson.save();
       res
@@ -79,7 +79,7 @@ export const deletePerson = async (req, res) => {
   const { _id } = req.body;
   try {
     await Person.deleteOne({ _id });
-    res.status(201).json({ message: "Usuario eliminado con éxito" });
+    res.status(201).json({ message: "Person deleted successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -98,7 +98,7 @@ export const getAll = async (req, res) => {
   let persons = await Person.find(filters)
     .skip(pageNumber * pageSize)
     .limit(pageSize);
-  res.status(201).json({ data: persons, length: await Person.count() });
+  res.status(201).json({ data: persons, length: await Person.count(filters) });
 };
 
 export const importData = async (req, res) => {
