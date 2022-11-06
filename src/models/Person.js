@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Defining person model with all the attributes and the type of each one
 const PersonSchema = new mongoose.Schema({
   Survived: {
     type: Number,

@@ -11,6 +11,8 @@ import { upload } from "../middlewares/middleware.js";
 
 const router = Router();
 
+// We define each route and we give it to swagger to build the docummentation 
+
 /**
  * @swagger
  * components:
